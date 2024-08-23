@@ -147,12 +147,15 @@ public class EmployeeManager implements EmployeeOperations {
     public void updateEmploye(ArrayList<Employee> employes, int identifiant) {
         for (Employee employee : employes) {
             if (employee.getId() == identifiant) {
+                //Recupérer des nouvelles informations communes a tout les types d'employer
                 System.out.println(employee.getClass());
-                System.out.println("Entrez le nom de l'employe: ");
+                System.out.println("Entrez le nouveau nom de l'employe: ");
                 scanner.nextLine();
                 employee.setNom(scanner.nextLine());
-                System.out.println("Entrez le salaire");
+                System.out.println("Entrez le nouveau salaire: ");
                 employee.setSalaire(scanner.nextDouble());
+
+                //Verifier si l'employer est un manager ou un developpeur
                 if (employee.getClass()==Manager.class) {
                     Manager upManager = new Manager();
                     upManager.setId(employee.getId());
@@ -160,8 +163,11 @@ public class EmployeeManager implements EmployeeOperations {
                     upManager.setSalaire(employee.getSalaire());
                     System.out.println("Entrez le nouveau nombre de personne a sa charge");
                     upManager.setNbrPersonne(scanner.nextLine());
-
+                    //Mettre à jour du tableau des employés
                     employes.set(employes.indexOf(employee), upManager);
+                    System.out.println("*****Mise à jour du manager éffectué avec succès*****");
+                    System.out.println("**Nouvelles informations**");
+                    upManager.getDetails();
                 } else if (employee.getClass() == Developer.class) {
                     Developer upDeveloper = new Developer();
                     upDeveloper.setId(employee.getId());
@@ -169,8 +175,11 @@ public class EmployeeManager implements EmployeeOperations {
                     upDeveloper.setSalaire(employee.getSalaire());
                     System.out.println("Entrez la nouvelle spécialité");
                     upDeveloper.setSpecialite(scanner.nextLine());
-
+                    // Mettre à jour du tableau des employés
                     employes.set(employes.indexOf(employee), upDeveloper);
+                    System.out.println("*****Mise à jour du developer éffectué avec succès*****");
+                    System.out.println("**Nouvelles informations**");
+                    upDeveloper.getDetails();
                 }
             }
         }
@@ -181,12 +190,8 @@ public class EmployeeManager implements EmployeeOperations {
      * Supprimer un employer
      */
     public void deleteEmploye(ArrayList<Employee> employes, int identifiant) {
-        for (Employee employee : employes) {
-            if (employee.getId() == identifiant) {
-                employes.remove(employee);
-                break;
-            }
-        }
+        employes.removeIf(e -> e.getId() == identifiant);
+        System.out.println("Employé supprimé avec succes");
     };
 
     public static void main(String[] args) {
