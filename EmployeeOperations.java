@@ -9,6 +9,4 @@ public interface EmployeeOperations {
     public void updateEmploye(ArrayList<Employee> employes, int identifiant);
 
     public void deleteEmploye(ArrayList<Employee> employes, int identifiant);
-
-
 }

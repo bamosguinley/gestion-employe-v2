@@ -92,6 +92,7 @@ public class EmployeeManager implements EmployeeOperations {
                 Manager manager = new Manager();
                 System.out.println("**Entrez les informations du manager**");
                 System.out.println("Nombre d'employe a la charge : ");
+                scanner.nextLine();
                 manager.setNbrPersonne(scanner.nextLine());
                 createEmploye(manager);
                 employes.add(manager);
@@ -146,17 +147,35 @@ public class EmployeeManager implements EmployeeOperations {
     public void updateEmploye(ArrayList<Employee> employes, int identifiant) {
         for (Employee employee : employes) {
             if (employee.getId() == identifiant) {
+                System.out.println(employee.getClass());
                 System.out.println("Entrez le nom de l'employe: ");
                 scanner.nextLine();
                 employee.setNom(scanner.nextLine());
                 System.out.println("Entrez le salaire");
                 employee.setSalaire(scanner.nextDouble());
-                // if (employee.getClass()==Manager) {
+                if (employee.getClass()==Manager.class) {
+                    Manager upManager = new Manager();
+                    upManager.setId(employee.getId());
+                    upManager.setNom(employee.getNom());
+                    upManager.setSalaire(employee.getSalaire());
+                    System.out.println("Entrez le nouveau nombre de personne a sa charge");
+                    upManager.setNbrPersonne(scanner.nextLine());
+
+                    employes.set(employes.indexOf(employee), upManager);
+                } else if (employee.getClass() == Developer.class) {
+                    Developer upDeveloper = new Developer();
+                    upDeveloper.setId(employee.getId());
+                    upDeveloper.setNom(employee.getNom());
+                    upDeveloper.setSalaire(employee.getSalaire());
+                    System.out.println("Entrez la nouvelle spécialité");
+                    upDeveloper.setSpecialite(scanner.nextLine());
                     
-                // }
+                    employes.set(employes.indexOf(employee), upDeveloper);
+                }
             }
         }
     };
+
 
     /*
      * Supprimer un employer
