@@ -9,6 +9,69 @@ public class EmployeeManager implements EmployeeOperations {
     static boolean continuer = true;
     static EmployeeManager employeeManager = new EmployeeManager();
 
+    /*
+     * Afficher le menu
+     */
+    public static void menuBar() {
+        System.out.println("*******Que voulez-vous faire?********");
+        System.out.println("1. Ajouter des employés");
+        System.out.println("2. Afficher la liste des employés");
+        System.out.println("3. Afficher les informations d'un employe");
+        System.out.println("4. Modifier un employé");
+        System.out.println("5. Supprimer un employé");
+        System.out.println("6. Quitter");
+        String menu = scanner.nextLine();
+        int identifiant;
+        switch (menu) {
+            case "1":
+                employeeManager.ajout();
+                continueMenu();
+                break;
+            case "2":
+                employeeManager.getAllEmploye(employes);
+                continueMenu();
+                break;
+            case "3":
+                System.out.println("Entrez l'identifiant de l'utilisateur: ");
+                identifiant = scanner.nextInt();
+                employeeManager.getOneEmploye(employes, identifiant);
+                continueMenu();
+                break;
+            case "4":
+                System.out.println("Entrez l'identifiant de l'utilisateur a mettre a jour: ");
+                identifiant = scanner.nextInt();
+                employeeManager.updateEmploye(employes, identifiant);
+                continueMenu();
+                break;
+            case "5":
+                System.out.println("Entrez l'identifiant de l'utilisateur a supprimer: ");
+                identifiant = scanner.nextInt();
+                employeeManager.deleteEmploye(employes, identifiant);
+                continueMenu();
+            case "6":
+                continuer = false; // fin
+                break;
+            default:
+                System.out.println("Option non valide. Veuillez réessayer.");
+                break;
+        }
+    }
+
+    /*
+     * Afficher le menu qui demande a l'utilisateur de continuer après une action
+     */
+    public static void continueMenu() {
+        if (continuer == true) {
+            scanner.nextLine();
+            System.out.println("Voulez-vous continuer ? (oui/non)");
+            String reponse = scanner.nextLine().trim().toLowerCase();
+            if (!reponse.equals("oui")) {
+                continuer = false;
+                System.out.println("Merci d'avoir utilisé notre application !");
+            }
+        }
+    }
+
 
     /*
      * Ajouter un employer en fonction de son type 
@@ -39,71 +102,10 @@ public class EmployeeManager implements EmployeeOperations {
                 developer.setSpecialite(scanner.nextLine());
                 scanner.nextLine();
                 createEmploye(developer);
+                employes.add(developer);
             }
         }
         // getAllEmploye(employes);
-    }
-
-    /*
-     * Afficher le menu 
-     */
-    public static void menuBar() {
-        System.out.println("*******Que voulez-vous faire?********");
-        System.out.println("1. Ajouter des employés");
-        System.out.println("2. Afficher la liste des employés");
-        System.out.println("3. Afficher les informations d'un employe");
-        System.out.println("4. Modifier un employé");
-        System.out.println("5. Supprimer un employé");
-        System.out.println("6. Quitter");
-        String menu = scanner.nextLine();
-        int identifiant;
-        switch (menu) {
-            case "1":
-                employeeManager.ajout();
-                continueMenu();
-                break;
-            case "2":
-                employeeManager.getAllEmploye(employes);
-                continueMenu();
-                break;
-            case "3":
-                System.out.println("Entrez l'identifiant de l'utilisateur: ");
-                 identifiant = scanner.nextInt();
-                employeeManager.getOneEmploye(employes, identifiant);
-                continueMenu();
-                break;
-            case "4":
-                System.out.println("Entrez l'identifiant de l'utilisateur a mettre a jour: ");
-                identifiant = scanner.nextInt();
-                employeeManager.updateEmploye(employes, identifiant);
-                continueMenu();
-                break;
-            case "5":
-                System.out.println("Entrez l'identifiant de l'utilisateur a supprimer: ");
-                identifiant = scanner.nextInt();
-                employeeManager.deleteEmploye(employes, identifiant);
-                continueMenu();
-            case "6":
-                continuer = false; // fin
-                break;
-            default:
-                System.out.println("Option non valide. Veuillez réessayer.");
-                break;
-        }
-    }
-    
-    /*
-     * Afficher le menu qui demande a l'utilisateur de continuer après une action 
-     */
-    public static void continueMenu() {
-        if (continuer == true) {
-            System.out.println("Voulez-vous continuer ? (oui/non)");
-            String reponse = scanner.nextLine().trim().toLowerCase();
-            if (!reponse.equals("oui")) {
-                continuer = false;
-                System.out.println("Merci d'avoir utilisé notre application !");
-            }
-        }
     }
 
 
@@ -163,6 +165,7 @@ public class EmployeeManager implements EmployeeOperations {
         for (Employee employee : employes) {
             if (employee.getId() == identifiant) {
                 employes.remove(employee);
+                break;
             }
         }
     };
@@ -170,6 +173,7 @@ public class EmployeeManager implements EmployeeOperations {
     public static void main(String[] args) {
         while (continuer) {
             menuBar();
+            System.out.println("La valeur de continuer    "+continuer);
         }
     }
 }
