@@ -169,7 +169,7 @@ public class EmployeeManager implements EmployeeOperations {
                     upDeveloper.setSalaire(employee.getSalaire());
                     System.out.println("Entrez la nouvelle spécialité");
                     upDeveloper.setSpecialite(scanner.nextLine());
-                    
+
                     employes.set(employes.indexOf(employee), upDeveloper);
                 }
             }
@@ -192,7 +192,6 @@ public class EmployeeManager implements EmployeeOperations {
     public static void main(String[] args) {
         while (continuer) {
             menuBar();
-            System.out.println("La valeur de continuer    "+continuer);
         }
     }
 }
